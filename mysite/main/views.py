@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from .models import Participants, Cadre, Activity, Outline, Payments
 from .forms import CreateNewParticipant, CreateNewCadre, CreateNewActivity, AddNewOutline
 from datetime import date, timedelta, datetime
+from django.db.models import Q
 
 # Create your views here.
 
@@ -363,8 +364,27 @@ def delete_outline(response, id):
 def payments(response):
     payments = Payments.objects.all()
 
-    magiczne_zuchy = get_object_or_404(Payments,)
-    return render(response, 'main/payments.html', {"payments": payments})
+    magiczne_zuchy = Payments.objects.filter(participant__team="5 Podgórska Gromada Zuchowa „Magiczne Zuchy”").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
+
+    jamanije = Payments.objects.filter(participant__team="29 Podgórska Gromada Zuchowa „Jamanije”").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
+
+    eastwick = Payments.objects.filter(participant__team="5 Podgórska Drużyna Harcerska „Eastwick” im. Zawiszy Czarnego").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
+
+    oman = Payments.objects.filter(participant__team="29 Podgórska Drużyna Harcerska „OMAN” im. hm. Olgi Drahonowskiej-Małkowskiej").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
+
+    fuzja = Payments.objects.filter(participant__team="295 Podgórska Drużyna Wielopoziomowa „Fuzja”").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
+
+    kadra_pomocnicza = Payments.objects.filter(participant__team="Kadra Pomocnicza").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
+
+    return render(response, 'main/payments.html', 
+                {"payments": payments, 
+                "magiczne_zuchy": magiczne_zuchy, 
+                "jamanije": jamanije, 
+                "eastwick": eastwick, 
+                "oman": oman,
+                "fuzja": fuzja,
+                "kadra_pomocnicza": kadra_pomocnicza,
+                })
 
 
 def installment(response, id):
