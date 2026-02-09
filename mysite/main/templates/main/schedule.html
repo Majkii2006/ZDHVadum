@@ -1,0 +1,100 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Harmonogram {% endblock %}
+
+{% block content %}
+
+<h3 class="mt-4 mb-2"><strong>Bieżący tydzień:</strong></h3>
+
+<table class="table table-bordered text-center align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Blok dnia</th>
+            {% for day in days1 %}
+                <th class="{% if day == today %}bg-warning fw-bold{% endif %}">
+                    {{ day|date:"D d.m" }}
+                </th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for block, row in week1 %}
+            <tr>
+                <td class="fw-bold text-capitalize">{{ block }}</td>
+
+                {% for day, cell in row %}
+                    <td style="height: 70px;">
+
+                        {% if cell %}
+                            <div class="text-white rounded p-1"
+                                 style="background-color: {{ cell.color }};"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 title="Osoba odpowiedzialna:  {{ cell.person }} Opis: {{cell.desc}}">
+                                {{ cell.title }}
+                            </div>
+                            <div>
+                                <a class="btn btn-link p-0 text-danger" href="{% url 'delete_schedule' cell.id %}">Usuń</a>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'add_schedule' %}?day={{ day|date:'Y-m-d' }}&block={{ block }}"
+                               class="d-block text-decoration-none">
+                                <span class="text-muted">Dodaj</span>
+                            </a>
+                        {% endif %}
+
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<h3 class="mt-5 mb-2"><strong>Następny tydzień:</strong></h3>
+
+<table class="table table-bordered text-center align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Blok dnia</th>
+            {% for day in days2 %}
+                <th>{{ day|date:"D d.m" }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for block, row in week2 %}
+            <tr>
+                <td class="fw-bold text-capitalize">{{ block }}</td>
+
+                {% for day, cell in row %}
+                    <td style="height: 70px;">
+
+                        {% if cell %}
+                            <div class="text-white rounded p-1"
+                                 style="background-color: {{ cell.color }};"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="top"
+                                 title="Osoba odpowiedzialna:  {{ cell.person }} Opis: {{cell.desc}}">
+                                {{ cell.title }}
+                            </div>
+                            <div>
+                                <a class="btn btn-link p-0 text-danger" href="{% url 'delete_schedule' cell.id %}">Usuń</a>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'add_schedule' %}?day={{ day|date:'Y-m-d' }}&block={{ block }}"
+                               class="d-block text-decoration-none">
+                                <span class="text-muted">Dodaj</span>
+                            </a>
+                        {% endif %}
+
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

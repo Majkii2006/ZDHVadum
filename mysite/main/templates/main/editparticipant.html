@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Edytuj Uczestnika{% endblock %}
+
+{% block content %}
+
+<h2>Edytuj uczestnika wyjazdu:</h2>
+
+{% load crispy_forms_tags %}
+<div class="d-flex justify-content-center">
+    <form method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" name="save" class="btn btn-primary">Gotowe</button>  <!-- Request POST aktywowany-->
+    </form>
+</div>
+{% endblock %}
+
+
+
+<style>
+    
+</style>

@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Edytuj Członka Kadry{% endblock %}
+
+{% block content %}
+
+<h2>Edytuj członka kadry:</h2>
+
+{% load crispy_forms_tags %}
+<div class="d-flex justify-content-center">
+    <form method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" name="save" class="btn btn-primary">Gotowe</button>
+    </form>
+</div>
+{% endblock %}
+
+
+
+<style>
+    
+</style>

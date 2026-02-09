@@ -1,0 +1,58 @@
+{%extends 'main/base.html'%}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row g-4">
+
+        <!-- KADRA -->
+        <div class="col-md-6">
+            <a href="{% url 'outlines' %}" class="menu-box box-kadra d-flex justify-content-center align-items-center">
+                <h1 class="m-0">KONSPEKTY</h1>
+            </a>
+        </div>
+
+        <!-- UCZESTNICY -->
+        <div class="col-md-6">
+            <a href="{% url 'payments' %}" class="menu-box box-uczestnicy d-flex justify-content-center align-items-center">
+                <h1 class="m-0">PŁATNOŚCI</h1>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    .menu-box {
+        height: 750px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: 0.4s;
+    }
+
+    .menu-box:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    .box-kadra {
+        background: linear-gradient(135deg, #c7b01c, #8cc24d);
+    }
+
+    .box-uczestnicy {
+        background: linear-gradient(135deg, #aa28b6, #7c24ca);
+    }
+
+    @media (max-width: 768px) {
+        .menu-box {
+            height: 200px;
+        }
+    }
+</style>
+
+
+
+{% endblock %}
