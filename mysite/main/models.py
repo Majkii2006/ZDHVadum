@@ -26,7 +26,7 @@ class Participants(models.Model):
     cadre = models.ForeignKey(Cadre, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.surname}"
     
 
 class Activity(models.Model):

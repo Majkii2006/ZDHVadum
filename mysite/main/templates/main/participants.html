@@ -44,7 +44,11 @@
 
         <!-- PRAWA KOLUMNA -->
         <div class="col-md-4 box-right"> 
-            <h3>XXXX</h3> 
+            <h3><strong>Ilość dzieci pod opiekunem:</strong></h3> 
+
+                {%for c in cadre%}
+                <p>{{ c.name }} {{ c.surname }} - <strong></strong></p> 
+                {% endfor %}
         </div> 
     </div>
 

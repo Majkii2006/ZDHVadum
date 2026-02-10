@@ -271,8 +271,26 @@ def participants(response):
     oman = Participants.objects.filter(team__contains="29 Podgórska Drużyna Harcerska „OMAN” im. hm. Olgi Drahonowskiej-Małkowskiej").count()
     fuzja = Participants.objects.filter(team__contains="295 Podgórska Drużyna Wielopoziomowa „Fuzja”").count()
     pomocnicza = Participants.objects.filter(team__contains="Kadra Pomocnicza").count()
-    return render(response, 'main/participants.html', {"ls":ls, "magiczne":magiczne, "jamanije":jamanije, "eastwick":eastwick, "oman":oman, 
-                                                       "fuzja":fuzja, "pomocnicza":pomocnicza})
+
+
+    cadre = Cadre.objects.all()
+    for c in cadre:
+        name = c.name
+        surname = c.surname
+        #DEBUGGING TROUBLES
+        print(name, surname)
+        numbers_of_cadre = Participants.objects.filter(cadre=f"{name} {surname}").count()
+
+    return render(response, 'main/participants.html', 
+                  {"ls":ls, 
+                    "magiczne":magiczne, 
+                    "jamanije":jamanije, 
+                    "eastwick":eastwick, 
+                    "oman":oman, 
+                    "fuzja":fuzja, 
+                    "pomocnicza":pomocnicza,
+                    "cadre": cadre,
+                    "numbers_of_cadre": numbers_of_cadre})
 
 def add_participant(response):
     if response.method == "POST":
@@ -376,6 +394,11 @@ def payments(response):
 
     kadra_pomocnicza = Payments.objects.filter(participant__team="Kadra Pomocnicza").filter(Q(installment="Niezapłacono") | Q(entire_amount = "Niezapłacono")).count()
 
+    ilosc_uczestnikow = Payments.objects.all().count()
+
+
+    
+
     return render(response, 'main/payments.html', 
                 {"payments": payments, 
                 "magiczne_zuchy": magiczne_zuchy, 
@@ -384,6 +407,7 @@ def payments(response):
                 "oman": oman,
                 "fuzja": fuzja,
                 "kadra_pomocnicza": kadra_pomocnicza,
+                "ilosc_uczestnikow": ilosc_uczestnikow
                 })
 
 
